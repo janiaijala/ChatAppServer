@@ -35,11 +35,22 @@ public class ServerClientBackEnd implements Runnable{
         
             //Start to wait data
             while(true){
-                ChatMessage cm = (ChatMessage)input.readObject();
-                ChatServer.broadcastMessage(cm);
+                
+                Object o = input.readObject();
+                if(o instanceof ChatMessage){
+                    ChatMessage cm = (ChatMessage)input.readObject();
+                    ChatServer.broadcastMessage(cm);
+                }
+         /*       if(o instanceof Participants){
+                    Participants p = (Participants)input.readObject();
+                    
+                }
+         */       
+
             }
         } catch (IOException | ClassNotFoundException ex) {
-            ex.printStackTrace();
+            
+            ChatServer.clients.remove(this);
         }
     }
     

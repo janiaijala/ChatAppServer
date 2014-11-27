@@ -21,6 +21,7 @@ public class ChatServer {
      * @param args the command line arguments
      */
     static ArrayList<ServerClientBackEnd> clients = new ArrayList();
+    //static ArrayList<clientinnimet>
     
     public static void main(String[] args) {
         try {

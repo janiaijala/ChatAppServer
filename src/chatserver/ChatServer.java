@@ -10,6 +10,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import message.ChatMessage;
+import message.Participants;
 
 /**
  *
@@ -21,6 +22,7 @@ public class ChatServer {
      * @param args the command line arguments
      */
     static ArrayList<ServerClientBackEnd> clients = new ArrayList();
+    static ArrayList<String> clientList = new ArrayList();
     //static ArrayList<clientinnimet>
     
     public static void main(String[] args) {
@@ -47,6 +49,22 @@ public class ChatServer {
     public static void broadcastMessage(ChatMessage cm){
         for(ServerClientBackEnd temp: clients){
             temp.sendMessage(cm);
+            
         }
     }
+    
+    public static void addParticipant(Participants p){
+        clientList.add(p.getParticipants());
+    }
+    
+    public static void send(){
+        for(String temp2:clientList){
+       
+        }
+    }
+   /* public static void sendClientList(){
+        for(String temp: clientList){
+            temp.sendClientList(clientList);
+        }
+    }*/
 }

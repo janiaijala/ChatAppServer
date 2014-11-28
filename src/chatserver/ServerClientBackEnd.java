@@ -5,6 +5,7 @@
  */
 package chatserver;
 
+import static chatserver.ChatServer.clientList;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -12,6 +13,8 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import message.ChatMessage;
+import message.ClientList;
+import message.Participants;
 
 /**
  *
@@ -38,14 +41,13 @@ public class ServerClientBackEnd implements Runnable{
                 
                 Object o = input.readObject();
                 if(o instanceof ChatMessage){
-                    ChatMessage cm = (ChatMessage)input.readObject();
+                    ChatMessage cm = (ChatMessage)o;
                     ChatServer.broadcastMessage(cm);
-                }
-         /*       if(o instanceof Participants){
-                    Participants p = (Participants)input.readObject();
+                }else if(o instanceof Participants){
+                    Participants p = (Participants)o;
+                    ChatServer.addParticipant(p);
                     
                 }
-         */       
 
             }
         } catch (IOException | ClassNotFoundException ex) {
@@ -62,4 +64,15 @@ public class ServerClientBackEnd implements Runnable{
             ex.printStackTrace();
         }
     }
-}
+    
+    public void send(ClientList list){
+        try {
+            output.writeObject(list);
+            output.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(ServerClientBackEnd.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         
+    }
+}    
+ 

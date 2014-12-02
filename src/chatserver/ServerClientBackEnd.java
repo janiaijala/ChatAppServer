@@ -25,6 +25,8 @@ public class ServerClientBackEnd implements Runnable{
     private Socket socket;
     private ObjectInputStream input;
     private ObjectOutputStream output;
+    private String name;
+
     
     public ServerClientBackEnd(Socket sock){
         socket = sock;
@@ -45,8 +47,8 @@ public class ServerClientBackEnd implements Runnable{
                     ChatServer.broadcastMessage(cm);
                 }else if(o instanceof Participants){
                     Participants p = (Participants)o;
-                    ChatServer.addParticipant(p);
-                    
+                    name=p.getParticipants();
+                    ChatServer.sendParticipants();                 
                 }
 
             }
@@ -74,5 +76,15 @@ public class ServerClientBackEnd implements Runnable{
         }
          
     }
+    
+    
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
 }    
  

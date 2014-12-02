@@ -10,6 +10,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import message.ChatMessage;
+import message.ClientList;
 import message.Participants;
 
 /**
@@ -53,18 +54,13 @@ public class ChatServer {
         }
     }
     
-    public static void addParticipant(Participants p){
-        clientList.add(p.getParticipants());
-    }
-    
-    public static void send(){
-        for(String temp2:clientList){
-       
+    public static void sendParticipants(){
+        ClientList users = new ClientList();
+        for(ServerClientBackEnd temp: clients){
+            users.setClientList(temp.getName());
+        }
+        for(ServerClientBackEnd temp: clients){
+            temp.send(users);
         }
     }
-   /* public static void sendClientList(){
-        for(String temp: clientList){
-            temp.sendClientList(clientList);
-        }
-    }*/
 }
